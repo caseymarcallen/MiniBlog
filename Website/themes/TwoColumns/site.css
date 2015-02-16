@@ -17,6 +17,7 @@ html, body{
 body {
     font: 1.8em/1.5 'Century Gothic', Verdana, Geneva, 'DejaVu Sans', sans-serif;
     margin: 0;
+    padding-top: 70px;
 }
 
 img, video, iframe {
@@ -25,6 +26,15 @@ img, video, iframe {
 
 a {
     color: #3277b3;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul > li > a > img {
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 
 .container {
@@ -36,6 +46,7 @@ a {
         border: none;
         text-align: center;
         margin: 0 0 3em 0;
+	    padding-bottom: 0;
     }
 
         .container > header a {

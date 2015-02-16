@@ -38,57 +38,76 @@
 	}
 </head>
 <body itemscope itemtype="http://schema.org/Blog" class="@(User.Identity.IsAuthenticated ? "admin": null)">
+	
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">@Blog.Title</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Blog</a></li>
+					<li><a href="/About">About</a></li>
+					<li><a href="/Contact">Contact</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
 
-    <div class="container">
-        <header role="banner">
-            <span><a href="~/" itemprop="url">@Blog.Title</a></span><br />
-            <em>@Blog.Description</em>
-        </header>
+	<div class="container">
+		
+		<header role="banner">
+			<span><a href="~/" itemprop="url">@Blog.Title</a></span><br />
+			<em>@Blog.Description</em>
+		</header>
 
-        <div role="main" class="col-md-8">
-            @RenderBody()
+		<aside role="complementary" class="col-md-3 col-md-offset-1">
+			<section>
+				<h3>About me</h3>
+				<p>
+					<img alt="Casey Allen Profile Picture" height="100" width="100" src="https://s.gravatar.com/avatar/b0a0ecfabf9ed4890a3b02cb1274c490?s=100&r=G" />
+				</p>
+			</section>
+			<section>
+				<h3>Categories</h3>
+				<ul>
+					@foreach (var cat in Blog.GetCategories())
+					{
+						<li><a href="~/category/@HttpUtility.UrlEncode(cat.Key.ToLowerInvariant())">@cat.Key (@cat.Value)</a></li>
+					}
+				</ul>
+			</section>
+			<section>
+				<h3>Around The Web</h3>
+				<ul>
+					<li class="social"><a href="https://github.com/caseymarcallen"><img alt="GitHub Logo" src="/images/GitHub.png" />GitHub</a></liclass>
+					<li class="social"><a href="https://stackoverflow.com/users/90852/casey"><img alt="StackOverflow Logo" src="/images/StackOverflow.png" />StackOverflow</a></li>
+					<li class="social"><a href="https://twitter.com/caseymarcallen"><img alt="Twitter Logo" src="/images/Twitter.png" />Twitter</a></li>
+				</ul>
+			</section>
+		</aside>
 
-            @if (Page.ShowPaging != null)
-            {
-                <ul class="pager">
-                    @if (Blog.GetPosts().Count() > Blog.PostsPerPage * Blog.CurrentPage)
-                    {
-                        <li class="previous"><a href="@Blog.GetPagingUrl(1)" rel="prev">&larr; Older</a></li>
-                    }
+		<div role="main" class="col-md-8">
+			@RenderBody()
 
-                    @if (Blog.CurrentPage > 1)
-                    {
-                        <li class="next"><a href="@Blog.GetPagingUrl(-1)" rel="next">Newer &rarr;</a></li>
-                    }
-                </ul>
-            }
-        </div>
+			@if (Page.ShowPaging != null)
+			{
+				<ul class="pager">
+					@if (Blog.GetPosts().Count() > Blog.PostsPerPage * Blog.CurrentPage)
+					{
+						<li class="previous"><a href="@Blog.GetPagingUrl(1)" rel="prev">&larr; Older</a></li>
+					}
 
-        <aside role="complementary" class="col-md-3 col-md-offset-1">
-            <section>
-                <h3>About me</h3>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper.
-                </p>
-            </section>
-            <section>
-                <h3>Categories</h3>
-                <ul>
-                    @foreach ( var cat in Blog.GetCategories() ) {
-                        <li><a href="~/category/@HttpUtility.UrlEncode(cat.Key.ToLowerInvariant())">@cat.Key (@cat.Value)</a></li>
-                    }
-                </ul>
-            </section>
-            <section>
-                <h3>My side projects</h3>
-                <ul>
-                    <li>Project 1</li>
-                    <li>Project 2</li>
-                    <li>Project 3</li>
-                </ul>
-            </section>
-        </aside>
-    </div>
+					@if (Blog.CurrentPage > 1)
+					{
+						<li class="next"><a href="@Blog.GetPagingUrl(-1)" rel="next">Newer &rarr;</a></li>
+					}
+				</ul>
+			}
+		</div>
+
+	</div>
 
     <footer class="text-center" role="contentinfo" itemscope itemtype="http://schema.org/Person" itemprop="author">
         @if (!User.Identity.IsAuthenticated)
